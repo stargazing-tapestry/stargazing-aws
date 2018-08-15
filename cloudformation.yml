@@ -16,6 +16,11 @@ Parameters:
     Type: String
     Description: the Amazon Resource Name (ARN) of an AWS Certificate Manager (ACM) certificate.
     AllowedPattern: "arn:aws:acm:.*"
+  APIGatewayDomain:
+    Type: String
+    Description: The domain name for the API Gateway
+    AllowedPattern: (?!-)[a-zA-Z0-9-.]{1,63}(?<!-)
+    ConstraintDescription: must be a valid DNS name.
 Resources:
   WebsiteBucket:
     Type: AWS::S3::Bucket
@@ -51,6 +56,12 @@ Resources:
             HTTPPort: '80'
             HTTPSPort: '443'
             OriginProtocolPolicy: http-only
+        - DomainName: !Ref APIGatewayDomain
+          Id: APIGateway
+          CustomOriginConfig:
+              HTTPPort: '80'
+              HTTPSPort: '443'
+              OriginProtocolPolicy: http-only
         Enabled: true
         HttpVersion: 'http2'
         DefaultRootObject: index.html
