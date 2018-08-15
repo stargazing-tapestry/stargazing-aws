@@ -61,6 +61,7 @@ Resources:
           - GET
           - HEAD
           Compress: true
+          DefaultTTL: 5 # TODO: set this to something longer
           TargetOriginId: S3Origin
           ForwardedValues:
             QueryString: true
